@@ -4,7 +4,11 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.14",
+    "postcss-cli": "^11.0.1",
+    "sass": "^1.99.0"
   },
   "peerDependencies": {
     "typescript": "^5"
