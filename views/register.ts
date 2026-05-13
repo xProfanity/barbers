@@ -1,4 +1,4 @@
-const loginPage = () => `
+const registerPage = () => `
 	<div class="container">
 		<div class="container-login">
 			<img
@@ -7,6 +7,12 @@ const loginPage = () => `
 			/>
 
 			<form>
+				<label>Username</label>
+				<input
+					class="text-input"
+					type="text"
+					name="username"
+				/>
 				<label>Phone Number</label>
 				<input
 					class="text-input"
@@ -20,15 +26,16 @@ const loginPage = () => `
 					name="password"
 				/>
 
-				<p class="error"></p>
-
-				<div class="buttons">
-					<button hx-post="/login" hx-target=".error">Login</button>
-					<a href="/register">I don't have an account</a>
-				</div>
+			<p class="error"></p>
+				
+			<div class="buttons">
+				<button>Register</button>
+				<a href="/login">I already have an account</a>
+			</div>
 			</form>
 		</div>
 	</div>
 `
 
-export default loginPage
+export default registerPage
+
