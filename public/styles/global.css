@@ -47,7 +47,7 @@ a:hover {
 button {
 	background-color: var(--accent);
 	color: white;
-	outline: var(--surface);
+	outline: none;
 	padding: var(--space-sm) var(--space-lg);
 	min-height: 48px;
 	border-radius: var(--space-sm);
@@ -64,6 +64,11 @@ button:hover {
 
 button:active {
 	transform: translateY(-1px);
+}
+
+button:focus-visible {
+	outline: 2px solid var(--accent-hover);
+	outline-offset: 2px;
 }
 
 label {
