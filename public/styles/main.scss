@@ -1,0 +1,71 @@
+@use "variables" as v;
+
+.container {
+	width: min(1100px, 90%);
+	margin-inline: auto;
+
+
+  .container-login {
+	  display: flex;
+	  flex-direction: column;
+	  justify-items: center;
+	  align-items: start;
+
+
+    img {
+	    margin-inline: auto;
+	    margin-top: 178.5px;
+      padding-bottom: v.$space-xl;
+    }
+    
+
+    form {
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: start;
+	    margin-inline: auto;
+
+      width: 600px;
+
+      label {
+        font-size: 1.5rem;
+      }
+
+      input {
+        width: 100%;
+        border: 2px solid v.$accent;
+        min-height: 48px;
+        margin: v.$space-md 0;
+        border-radius: v.$space-sm;
+        padding: 0 v.$space-sm;
+        font-family: Comfortaa, sans-serif;
+        font-size: 1.05rem;
+        outline: none;
+
+        &:focus-visible {
+          outline: 2px solid v.$accent-hover;
+          outline-offset: 2px;
+        }
+      }
+
+      .buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: end;
+      }
+
+      .error {
+        padding: v.$space-xs 0;
+        height: v.$space-sm;
+        color: red;
+      }
+    }
+  }
+
+}
+
+
+

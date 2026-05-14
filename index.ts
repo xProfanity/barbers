@@ -4,8 +4,10 @@ import {serveStatic} from "@hono/node-server/serve-static"
 import getStaticIndexPage from "./views/index.ts"
 import homePage from "./views/home.ts"
 import authMiddleware from "./middlewares/authMiddleware.ts"
-import loginPage from "./views/login.ts"
 import notFoundPage from "./views/not-found.ts"
+import registerPage from "./views/register.ts"
+
+import loginUser from "./handlers/auth.ts"
 
 const app = new Hono()
 
@@ -27,8 +29,10 @@ app.get("/home", (c) => {
 	return c.html(getStaticIndexPage("Barbers - Home", homePage()))
 })
 
-app.get("/login", (c) => {
-	return c.html(getStaticIndexPage("Barbers - Login", loginPage()))
+app.route("/login", loginUser)
+
+app.get("/register", (c) => {
+	return c.html(getStaticIndexPage("Barbers - Register", registerPage()))
 })
 
 Bun.serve({
