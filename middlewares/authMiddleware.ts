@@ -1,15 +1,16 @@
 import {getCookie} from "hono/cookie"
+import {fetchSessionBySessionId} from "../lib/queries"
 
 export default async function authMiddleware(c, next) {
-	const sessionId = getCookie(c, "sessionId")
+	const sessionId = getCookie(c, "session_id")
 	
-	if (!sessionId) return c.redirect("/login")
+	if (!sessionId) return c.redirect("/auth")
 
-	// find session
+	const session = await fetchSessionBySessionId([sessionId])
 
-	// if no session found redirect to login
+	if(!session) return c.redirect("/auth")
 	
-	// if session found set user cookie from the session
+	c.set("user", session.id)
 
 	await next()
 }

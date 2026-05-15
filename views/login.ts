@@ -10,21 +10,23 @@ const loginPage = () => `
 				<label>Phone Number</label>
 				<input
 					class="text-input"
-					type="text"
+					type="tel"
 					name="phone"
+					required
 				/>
 				<label>Password</label>
 				<input
 					class="text-input"
 					type="password"
 					name="password"
+					required
 				/>
 
 				<p class="error"></p>
 
 				<div class="buttons">
-					<button hx-post="/login" hx-target=".error">Login</button>
-					<a href="/register">I don't have an account</a>
+					<button hx-post="/auth/login" hx-target=".error">Login</button>
+					<a href="/auth/register">I don't have an account</a>
 				</div>
 			</form>
 		</div>
