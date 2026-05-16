@@ -7,10 +7,11 @@ export async function fetchAuthUserByPhone(phone: string) {
 		const result = await client.query({text: query, values: [phone]})
 		
 		return result.rows[0]
-	} catch (err) {
-		console.log(err)	
+	} catch (error) {
+		console.error(error)	
+		throw error
 	} finally {
-		await client.release()
+		client.release()
 	}
 }
 
@@ -23,9 +24,10 @@ export async function fetchIfPhoneAlreadyExist(phone: string) {
 
 		return result.rows[0].alreadyexists
 	} catch (error) {
-		console.log(error)	
+		console.error(error)	
+		throw error
 	} finally {
-		await client.release()
+		client.release()
 	}
 }
 
@@ -38,9 +40,10 @@ export async function createUserRecord(record) {
 
 		return result.command === 'INSERT'
 	} catch (error) {
-		console.log(error)	
+		console.error(error)	
+		throw error
 	} finally {
-		await client.release()
+		client.release()
 	}
 }
 
@@ -51,12 +54,14 @@ export async function createUserSession(phone) {
 
 	try {
 		const userResult = await client.query({text: userQuery, values: [phone]})
+		if (!userResult.rows[0]?.id) return null
 		const sessionResult = await client.query({text: sessionInsertQuery, values: [userResult.rows[0].id]})
 		return sessionResult.rows[0]
 	} catch (error) {
-		console.log(error)	
+		console.error(error)	
+		throw error
 	} finally {
-		await client.release()
+		client.release()
 	}
 	
 }
@@ -70,8 +75,9 @@ export async function fetchUserBySessionId(session) {
 		if(result.rows?.length === 0) return null
 		return result.rows[0]
 	} catch (error) {
-		console.log(error)	
+		console.error(error)	
+		throw error
 	} finally {
-		await client.release()
+		client.release()
 	}
 }
