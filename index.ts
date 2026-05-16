@@ -7,6 +7,7 @@ import authMiddleware from "./middlewares/authMiddleware.ts"
 import notFoundPage from "./views/not-found.ts"
 
 import authRouter from "./handlers/auth.ts"
+import userRouter from "./handlers/user.ts"
 
 const app = new Hono()
 
@@ -19,6 +20,7 @@ app.notFound((c) => {
 })
 
 app.use("/home", authMiddleware)
+app.use("/user", authMiddleware)
 
 app.get("/", (c) => {
 	return c.redirect("/home")
@@ -28,11 +30,11 @@ app.get("/home", (c) => {
 	return c.html(getStaticIndexPage("Barbers - Home", homePage()))
 })
 
+app.route("/user", userRouter)
+
 app.route("/auth", authRouter)
 
-const server = Bun.serve({
+Bun.serve({
 	port: process.env.PORT || 3000,
 	fetch: app.fetch
 })
-
-console.log(`Server running on port ${server.port}`)

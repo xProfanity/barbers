@@ -24,7 +24,6 @@ app.post("/login", async (c) => {
 	}
 
 	const correctPassword = await argon2.verify(user.password_hash, body.get("password"))	
-	console.log(correctPassword)
 
 	if(!correctPassword) return c.text("Forgot password much? huh?")
 	
@@ -36,7 +35,7 @@ app.post("/login", async (c) => {
 	
 	setCookie(c, "session_id", session.id, {
 		httpOnly: true,
-		secure: true,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "Lax",
 		path: "/"
 	})
@@ -80,7 +79,7 @@ app.post("/register", async (c) => {
 
 		setCookie(c, "session_id", session.id, {
 			httpOnly: true,
-			secure: true,
+			secure: process.env.NODE_ENV === "production",
 			sameSite: "Lax",
 			path: "/"
 		})
