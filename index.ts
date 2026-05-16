@@ -5,9 +5,8 @@ import getStaticIndexPage from "./views/index.ts"
 import homePage from "./views/home.ts"
 import authMiddleware from "./middlewares/authMiddleware.ts"
 import notFoundPage from "./views/not-found.ts"
-import registerPage from "./views/register.ts"
 
-import loginUser from "./handlers/auth.ts"
+import authRouter from "./handlers/auth.ts"
 
 const app = new Hono()
 
@@ -29,13 +28,11 @@ app.get("/home", (c) => {
 	return c.html(getStaticIndexPage("Barbers - Home", homePage()))
 })
 
-app.route("/login", loginUser)
+app.route("/auth", authRouter)
 
-app.get("/register", (c) => {
-	return c.html(getStaticIndexPage("Barbers - Register", registerPage()))
-})
-
-Bun.serve({
+const server = Bun.serve({
 	port: process.env.PORT || 3000,
 	fetch: app.fetch
 })
+
+console.log(`Server running on port ${server.port}`)

@@ -12,25 +12,28 @@ const registerPage = () => `
 					class="text-input"
 					type="text"
 					name="username"
+					required
 				/>
 				<label>Phone Number</label>
 				<input
 					class="text-input"
-					type="text"
+					type="tel"
 					name="phone"
+					required
 				/>
 				<label>Password</label>
 				<input
 					class="text-input"
 					type="password"
 					name="password"
+					required
 				/>
 
 			<p class="error"></p>
 				
 			<div class="buttons">
-				<button>Register</button>
-				<a href="/login">I already have an account</a>
+				<button hx-post="/auth/register" hx-target=".error">Register</button>
+				<a href="/auth/login">I already have an account</a>
 			</div>
 			</form>
 		</div>
