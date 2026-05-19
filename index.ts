@@ -7,7 +7,7 @@ import authMiddleware from "./middlewares/authMiddleware.ts"
 import notFoundPage from "./views/not-found.ts"
 
 import authRouter from "./handlers/auth.ts"
-import userRouter from "./handlers/user.ts"
+import userRouter from "./handlers/api.ts"
 
 const app = new Hono()
 
@@ -20,7 +20,7 @@ app.notFound((c) => {
 })
 
 app.use("/home", authMiddleware)
-app.use("/user", authMiddleware)
+app.use("/api/*", authMiddleware)
 
 app.get("/", (c) => {
 	return c.redirect("/home")
@@ -30,7 +30,7 @@ app.get("/home", (c) => {
 	return c.html(getStaticIndexPage("Barbers - Home", homePage()))
 })
 
-app.route("/user", userRouter)
+app.route("/api", userRouter)
 
 app.route("/auth", authRouter)
 

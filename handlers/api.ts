@@ -3,8 +3,12 @@ import {Hono} from "hono"
 const app = new Hono()
 
 app.get("/", (c) => {
-	const user = c.get("user")
+	return c.text("invalid endpoint")
+})
 
+app.get("/user", (c) => {
+	const user = c.get("user")
+	
 	if (!user?.username) return c.text("Unauthorized", 401)
 
 	const safeUsername = String(user.username)
