@@ -3,7 +3,7 @@ import {setCookie, deleteCookie} from "hono/cookie"
 import getStaticIndexPage from "../views/index.ts"
 import loginPage from "../views/login.ts"
 import registerPage from "../views/register.ts"
-import {fetchAuthUserByPhone, fetchIfPhoneAlreadyExist, createUserRecord, createUserSession, deleteUserSession} from "../lib/queries.ts"
+import {foo, fetchAuthUserByPhone, fetchIfPhoneAlreadyExist, createUserRecord, createUserSession, deleteUserSession} from "../lib/queries.ts"
 import argon2 from "argon2"
 
 const app = new Hono()
@@ -92,18 +92,20 @@ app.post("/register", async (c) => {
 	}
 })
 
-app.get('sign-out', async (c) => {
-	const user_id = c.get("user")
-	const success =	await deleteUserSession([user_id])
-	if (!success) {
+app.post('/sign-out', async (c) => {
+	const user = c.get("user")
+	try {
+		await deleteUserSession([user?.id])
+		
+		c.set("user", null)	
+		deleteCookie(c, "session_id")
+	
+		c.header('HX-Redirect', "/")
+		return c.body(null)
+	} catch(error) {
+		console.error(error)
 		return c.text("We run into a little problem lol (Skill Issue)")
 	}
-	
-	c.set("user", null)	
-	deleteCookie(c, "session_id")
-	
-	c.header('HX-Redirect', "/")
-	return c.body(null)
 })
 
 export default app

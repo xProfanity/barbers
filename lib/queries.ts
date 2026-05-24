@@ -1,12 +1,10 @@
 import {dbClient} from "./pg-client.ts"
 
-export async function deleteUserSession(values) {
+export async function deleteUserSession(user_id) {
 	const client = await dbClient()
-	const text = 'delete from sessions where user_id=$1'
+	const query = 'delete from sessions where user_id=$1'
 	try {
-		await client.query({text, values})	
-		
-		return true
+		await client.query({text: query, values: user_id})	
 	} catch (error) {
 		console.error(error)	
 		throw error
