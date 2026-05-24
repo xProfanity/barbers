@@ -94,3 +94,18 @@ export async function fetchUserBySessionId(session) {
 		client.release()
 	}
 }
+
+export async function fetchUserNotifications(user_id) {
+	const client = await dbClient()
+	const query = "select * from notifications where user_id=$1"
+
+	try {
+		const result = await client.query({text: query, values: user_id})	
+		return result.rows
+	} catch (error) {
+		console.error(error)	
+		throw error
+	} finally {
+		client.release()
+	}
+}

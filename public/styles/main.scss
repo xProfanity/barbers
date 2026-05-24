@@ -1,9 +1,9 @@
 @use "variables" as v;
+@use "mixins" as m;
 
 .container {
 	width: min(1100px, 90%);
 	margin-inline: auto;
-
 
   .container-login {
 	  display: flex;
@@ -65,6 +65,19 @@
     }
   }
 
+  header {
+    @include m.flex-row(space-between);
+    
+    width: 100%;
+
+    .user-profile {
+      color: v.$text-secondary;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 

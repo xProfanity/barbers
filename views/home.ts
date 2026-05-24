@@ -1,5 +1,18 @@
 const homePage = () => `
-	<div>This is a home page! Hello, <span hx-get="/user" hx-trigger="load"></span>!</div>
+	<div class="container">
+		<header>
+			<div class="user-profile">
+				<p>Hi <span hx-get="/api/user" hx-trigger="load"></span></p>
+				<p>Are you ready to book?</p>	
+			</div>
+
+			<div>
+				<button hx-post="/auth/sign-out">
+					Sign Out
+				</button>
+			</div>
+		</header>
+	</div>
 `
 
 export default homePage
