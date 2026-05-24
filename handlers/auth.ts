@@ -94,8 +94,13 @@ app.post("/register", async (c) => {
 
 app.post('/sign-out', async (c) => {
 	const user = c.get("user")
+	if(!user) {
+		deleteCookie(c, "session_id")
+		c.header('HX-Redirect', '/')
+		return c.body(null)
+	}
 	try {
-		await deleteUserSession([user?.id])
+		await deleteUserSession([user.id])
 		
 		c.set("user", null)	
 		deleteCookie(c, "session_id")
