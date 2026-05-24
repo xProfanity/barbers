@@ -16,6 +16,12 @@
 	--space-2xl:4rem
 }
 
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
 h1, h2, h3 {
 	font-family: "Comfortaa", sans-serif;
   color: var(--text-primary);
