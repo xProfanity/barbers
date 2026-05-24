@@ -109,3 +109,19 @@ export async function fetchUserNotifications(user_id) {
 		client.release()
 	}
 }
+
+export async function fetchAvailableServices() {
+	const client = await dbClient()
+	const query = 'select s.id, s.description, s.price, s.name, s.duration_minutes, s.active, count(a.id) as total_bookings from services s left join appointments a on a.service_id=s.id where s.active group by s.id, s.name, s.description, s.price, s.duration_minutes, s.active'
+
+	try {
+		const result = await client.query(query)
+	
+		return result.rows
+	} catch (error) {
+		console.error(error)	
+		throw error
+	} finally {
+		client.release()
+	}
+}

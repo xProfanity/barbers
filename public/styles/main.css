@@ -68,5 +68,63 @@
 .container header .user-profile span {
   font-weight: bold;
 }
+.container .services {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.container .services h1 {
+  margin-bottom: 0;
+}
+.container .services p {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+.container .services ul {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-top: 1.5rem;
+  width: 100%;
+  gap: 1.5rem;
+}
+.container .services ul li {
+  width: 100%;
+  background-color: #1e1e1e;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: contrast-color(#1e1e1e);
+}
+.container .services ul li .name {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.container .services ul li .details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+.container .services ul li .details .price {
+  color: #C7A0D5;
+}
+.container .services ul li .footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
 /*# sourceMappingURL=main.css.map */

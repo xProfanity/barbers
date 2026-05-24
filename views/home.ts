@@ -14,8 +14,11 @@ const homePage = () => `
 		</header>
 		<hr />
 		
-		<div>
+		<div class="services">
 			<h1>Services</h1>
+			<p>Book a service from the list below.</p>
+
+			<ul hx-get="/api/services" hx-trigger="load"></ul>
 		</div>
 	</div>
 `
