@@ -69,9 +69,14 @@
     @include m.flex-row(space-between);
     
     width: 100%;
+    padding: v.$space-md 0;
 
     .user-profile {
-      color: v.$text-secondary;
+      color: v.$text-primary;
+
+     .caption {
+        color: v.$text-secondary;
+      }
 
       span {
         font-weight: bold;

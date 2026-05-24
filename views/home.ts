@@ -3,7 +3,7 @@ const homePage = () => `
 		<header>
 			<div class="user-profile">
 				<p>Hi <span hx-get="/api/user" hx-trigger="load"></span></p>
-				<p>Are you ready to book?</p>	
+				<p class="caption">Are you ready to book?</p>	
 			</div>
 
 			<div>
@@ -12,6 +12,11 @@ const homePage = () => `
 				</button>
 			</div>
 		</header>
+		<hr />
+		
+		<div>
+			<h1>Services</h1>
+		</div>
 	</div>
 `
 

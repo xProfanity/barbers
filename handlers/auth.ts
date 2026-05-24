@@ -3,7 +3,7 @@ import {setCookie, deleteCookie} from "hono/cookie"
 import getStaticIndexPage from "../views/index.ts"
 import loginPage from "../views/login.ts"
 import registerPage from "../views/register.ts"
-import {foo, fetchAuthUserByPhone, fetchIfPhoneAlreadyExist, createUserRecord, createUserSession, deleteUserSession} from "../lib/queries.ts"
+import {fetchAuthUserByPhone, fetchIfPhoneAlreadyExist, createUserRecord, createUserSession, deleteUserSession} from "../lib/queries.ts"
 import argon2 from "argon2"
 
 const app = new Hono()

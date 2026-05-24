@@ -7,7 +7,7 @@
 
 @mixin flex_row($justify: center) {
   display: flex;
-  flex-direcion: row;
+  flex-direction: row;
   align-items: center;
   justify-content: $justify;
 }
