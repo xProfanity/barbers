@@ -7,7 +7,7 @@ const homePage = () => `
 			</div>
 
 			<div>
-				<button hx-get="/auth/sign-out">
+				<button hx-post="/auth/sign-out">
 					Sign Out
 				</button>
 			</div>
