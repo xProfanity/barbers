@@ -95,6 +95,13 @@ export async function fetchUserBySessionId(session) {
 	}
 }
 
+/**
+ * Fetches all notification records for a given user.
+ *
+ * @param user_id - The identifier of the user whose notifications will be retrieved
+ * @returns An array of notification rows belonging to the specified user
+ * @throws When the database query fails
+ */
 export async function fetchUserNotifications(user_id) {
 	const client = await dbClient()
 	const query = "select * from notifications where user_id=$1"
@@ -110,6 +117,11 @@ export async function fetchUserNotifications(user_id) {
 	}
 }
 
+/**
+ * Retrieves active services and their total booking counts.
+ *
+ * @returns An array of rows where each row contains: `id`, `description`, `price`, `name`, `duration_minutes`, `active`, and `total_bookings`
+ */
 export async function fetchAvailableServices() {
 	const client = await dbClient()
 	const query = 'select s.id, s.description, s.price, s.name, s.duration_minutes, s.active, count(a.id) as total_bookings from services s left join appointments a on a.service_id=s.id where s.active group by s.id, s.name, s.description, s.price, s.duration_minutes, s.active'
