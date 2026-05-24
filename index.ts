@@ -1,5 +1,6 @@
 import {Hono} from "hono"
 import {serveStatic} from "@hono/node-server/serve-static"
+import {csrf} from "hono/csrf"
 
 import getStaticIndexPage from "./views/index.ts"
 import homePage from "./views/home.ts"
@@ -10,6 +11,8 @@ import authRouter from "./handlers/auth.ts"
 import userRouter from "./handlers/api.ts"
 
 const app = new Hono()
+
+app.use(csrf())
 
 app.use(serveStatic({
 	root: './public'

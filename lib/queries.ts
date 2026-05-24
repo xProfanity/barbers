@@ -1,5 +1,18 @@
 import {dbClient} from "./pg-client.ts"
 
+export async function deleteUserSession(user_id) {
+	const client = await dbClient()
+	const query = 'delete from sessions where user_id=$1'
+	try {
+		await client.query({text: query, values: user_id})	
+	} catch (error) {
+		console.error(error)	
+		throw error
+	} finally {
+		client.release()
+	}
+}
+
 export async function fetchAuthUserByPhone(phone: string) {
 	const client = await dbClient()
 	const query = `select * from users where phone=$1`
