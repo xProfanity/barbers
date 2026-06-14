@@ -1,5 +1,35 @@
 import {dbClient} from "./pg-client.ts"
 
+export async function countAppointmentsForAService(service_id) {
+	const client = await dbClient()
+	const query = "select count(*) as no_appointments from appointments where service_id=$1"
+
+	try {
+		const result = await client.query({text: query, values: service_id})	
+		return result.rows[0].no_appointments
+	} catch (error) {
+		console.error(error)	
+		throw error
+	} finally {
+		client.release()
+	}
+}
+
+export async function postServiceAppointment(service_id) {
+	const client = await dbClient()
+	const query = "insert into appointments(user_id, barber_id, service_id) values($1, 1, $2) on conflict(user_id) do nothing"
+	
+	try {
+		const result = await client.query({text: query, values: service_id})	
+		return !!result.rowCount
+	} catch (error) {
+		console.error(error)	
+		throw error
+	} finally {
+		client.release()
+	}
+}
+
 export async function deleteUserSession(user_id) {
 	const client = await dbClient()
 	const query = 'delete from sessions where user_id=$1'
@@ -101,6 +131,35 @@ export async function fetchUserNotifications(user_id) {
 
 	try {
 		const result = await client.query({text: query, values: user_id})	
+		return result.rows
+	} catch (error) {
+		console.error(error)	
+		throw error
+	} finally {
+		client.release()
+	}
+}
+
+export async function fetchUserAppointment(user_id) {
+	const client = await dbClient()
+	const query = "select count(*) from appointments a where a.user_id=$1"
+
+	try {
+		const result = await client.query({text: query, values: user_id})	
+		return result.rows[0].count
+	} catch (error) {
+		console.error(error)	
+		throw error
+	}
+}
+
+export async function fetchAvailableServices(appointment) {
+	const client = await dbClient()
+	const query = 'select s.id, s.description, s.price, s.name, s.duration_minutes, s.active, exists(select 1 from appointments a where a.service_id=s.id and a.user_id=$1) as booked from services s left join appointments a on a.service_id=s.id where s.active group by s.id, s.name, s.description, s.price, s.duration_minutes, s.active'
+
+	try {
+		const result = await client.query({text: query, values: appointment})
+	
 		return result.rows
 	} catch (error) {
 		console.error(error)	

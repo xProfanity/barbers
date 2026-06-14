@@ -33,5 +33,5 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
-public/styles/main.css
-public/styles/main.css.map
+main.css
+main.css.map
