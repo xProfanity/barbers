@@ -1,8 +1,10 @@
+import {safeHTML} from "../lib/helpers.ts"
+
 export const map_services = (services: Service[]) => `
 	${services.sort((a, b) => b.booked - a.booked).map((service, index) => `
 		<li data-id="${index}">
-			<p class="name">${service.name}</p>
-			<p>${service.description}</p>
+			<p class="name">${safeHTML(service.name)}</p>
+			<p>${safeHTML(service.description)}</p>
 			<div class="details">
 				<span class="time">~ ${service.duration_minutes} mins</span>
 				<span class="price">MWK ${parseInt(service.price).toLocaleString()}</span>

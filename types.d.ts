@@ -13,3 +13,10 @@ declare interface Service {
 	total_bookings: number
 	booked: boolean
 }
+
+declare interface User {
+	username: string
+	id: number
+	role: string
+	phone: string
+}

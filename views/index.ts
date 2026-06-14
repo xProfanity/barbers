@@ -11,6 +11,7 @@ const getStaticIndexPage = (title: string, content: string) => `
 			<main>
 				${content}
 			</main>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 		<script>
 			function customToast(text, isError = false) {
 				Toastify({
@@ -23,7 +24,6 @@ const getStaticIndexPage = (title: string, content: string) => `
 				}).showToast()
 			}
 		</script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 		</body>
 	</html>
 `

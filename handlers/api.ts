@@ -1,6 +1,7 @@
 import {Hono} from "hono"
 
 import {fetchUserNotifications, fetchAvailableServices, postServiceAppointment, countAppointmentsForAService, fetchUserAppointment} from "../lib/queries.ts"
+import {safeHTML} from "../lib/helpers.ts"
 import {BELL, BELL_BADGE} from "../views/icons.ts"
 
 import {map_services} from "../templates/map_services.ts"
@@ -12,16 +13,11 @@ app.get("/", (c) => {
 })
 
 app.get("/user", (c) => {
-	const user = c.get("user")
+	const user = <User>c.get("user")
 	
 	if (!user?.username) return c.text("Unauthorized", 401)
 
-	const safeUsername = String(user.username)
-		.replaceAll("&", "&amp;")
-		.replaceAll("<", "&lt;")
-		.replaceAll(">", "&gt;")
-		.replaceAll('"', "&quot;")
-		.replaceAll("'", "&`#39`;")
+	const safeUsername = safeHTML(user.username)
 	return c.text(safeUsername)
 })
 
@@ -51,7 +47,6 @@ app.get("/appointment", async (c) => {
 	const {id: user_id} = c.get("user")
 	try {
 		const appointments = await fetchUserAppointment([user_id])	
-		console.log("appointments", typeof appointments)
 return appointments > 0 ? c.html(`<p class="caption">You have an appointment. <a hx-get="/api/appointment-details">View</a></p>`) : c.html(`<p class="caption" hx-get="/api/appointment" hx-swap="outerHTML" hx-trigger="refresh-target from:body">Are you ready to book?</p>`)
 	} catch (error) {
 		console.error(error)	

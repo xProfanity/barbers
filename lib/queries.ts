@@ -146,7 +146,6 @@ export async function fetchUserAppointment(user_id) {
 
 	try {
 		const result = await client.query({text: query, values: user_id})	
-		console.log("count", result.rows[0].count)
 		return result.rows[0].count
 	} catch (error) {
 		console.error(error)	
