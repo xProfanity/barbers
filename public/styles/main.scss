@@ -86,9 +86,6 @@
 
   .services {
     @include m.flex-col(start, start);
-    gap: 0;
-    margin: 0;
-    padding: 0;
 
     width: 100%;
 
@@ -136,6 +133,11 @@
         .footer {
           width: 100%;
           @include m.flex-row(center, space-between);
+
+          .booked-actions {
+            @include m.flex-row(center, space-between);
+            gap: v.$space-lg;
+          }
         }
       }
     }

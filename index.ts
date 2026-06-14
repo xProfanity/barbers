@@ -4,6 +4,7 @@ import {csrf} from "hono/csrf"
 
 import getStaticIndexPage from "./views/index.ts"
 import homePage from "./views/home.ts"
+import Appointment from "./views/appointment.ts"
 import authMiddleware from "./middlewares/authMiddleware.ts"
 import notFoundPage from "./views/not-found.ts"
 
@@ -31,6 +32,10 @@ app.get("/", (c) => {
 
 app.get("/home", (c) => {
 	return c.html(getStaticIndexPage("Barbers - Home", homePage()))
+})
+
+app.get("/home/appointment-details", (c) => {
+	return c.html(getStaticIndexPage("Barbers - Appointment", Appointment()))
 })
 
 app.route("/api", userRouter)

@@ -1,6 +1,6 @@
 import {Hono} from "hono"
 
-import {fetchUserNotifications, fetchAvailableServices} from "../lib/queries.ts"
+import {fetchUserNotifications, fetchAvailableServices, postServiceAppointment, countAppointmentsForAService, fetchUserAppointment} from "../lib/queries.ts"
 import {BELL, BELL_BADGE} from "../views/icons.ts"
 
 import {map_services} from "../templates/map_services.ts"
@@ -36,8 +36,10 @@ app.get("/notis", async (c) => {
 })
 
 app.get("/services", async (c) => {
+	const {id: user_id} = c.get("user")
+
 	try {
-		const services = await fetchAvailableServices()
+		const services = await fetchAvailableServices([user_id])
 		return c.html(map_services(services))
 	} catch (error) {
 		console.error(error)	
@@ -45,15 +47,53 @@ app.get("/services", async (c) => {
 	}
 })
 
-app.get('/bookings-count/:count', (c) => {
-	const count = parseInt(c.req.param('count'))
-	switch (count) {
-		case 0:
-			return c.text("Nobody in line for this one!")
-		case count === 1:
-			return c.text(`1 person has booked this`)
-		default:
-			return c.text(`${count} people have booked this`)
+app.get("/appointment", async (c) => {
+	const {id: user_id} = c.get("user")
+	try {
+		const appointments = await fetchUserAppointment([user_id])	
+		console.log("appointments", typeof appointments)
+return appointments > 0 ? c.html(`<p class="caption">You have an appointment. <a hx-get="/api/appointment-details">View</a></p>`) : c.html(`<p class="caption" hx-get="/api/appointment" hx-swap="outerHTML" hx-trigger="refresh-target from:body">Are you ready to book?</p>`)
+	} catch (error) {
+		console.error(error)	
+		return c.text("Something went wrong", 500)	
+	}
+})
+
+app.get("/appointment-details", (c) => {
+	c.header("HX-Redirect", "/home/appointment-details")
+	return c.body(null)
+})
+
+app.get('/bookings-count/:service_id', async (c) => {
+	const service_id = parseInt(c.req.param('service_id'))
+
+	try {
+		const count = await countAppointmentsForAService([service_id])
+		switch (count) {
+			case 0:
+				return c.text("Nobody in line for this one!")
+			case 1:
+				return c.text(`1 person has booked this`)
+			default:
+				return c.text(`${count} people have booked this`)
+		}
+	} catch (error) {
+		console.log(error)	
+		return c.text("something went wrong", 500)
+	}
+})
+
+app.post("/appointment", async (c) => {
+	const body = await c.req.formData()
+	const user = c.get("user")
+	const service_id = body.get("service_id")
+	try {
+		const success = await postServiceAppointment([user.id, service_id])
+		c.header("HX-Trigger", "refresh-target")
+		return success ? c.html(`<p hx-on::load="customToast('Booked appointment successfully')">booked</p>`) : c.text("failed", 409)
+	} catch (error) {
+		console.error(error)	
+		return c.text("failed")
 	}
 })
 

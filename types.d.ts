@@ -11,4 +11,5 @@ declare interface Service {
   price: string
   active: number
 	total_bookings: number
+	booked: boolean
 }
